@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apex Pulse - F1 Cockpit Steering Wheel Display</title>
+    <!-- High-impact motorsport typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/driver.css">
+</head>
+<body>
+
+    <!-- 1. PRE-RACE APEX COCKPIT INITIALIZATION OVERLAY -->
+    <div class="f1-ignition-overlay" id="f1IgnitionOverlay">
+        <div class="ignition-backdrop-pattern"></div>
+
+        <div class="ignition-content-card">
+            <div class="ignition-badge-row">
+                <span class="f1-apex-badge">APEX RACING TEAM // APX-01</span>
+                <span class="f1-engine-badge">1.6L TURBO-HYBRID // ERS MGU-K</span>
+            </div>
+            <h1 class="ignition-title">DRIVER COCKPIT HUD</h1>
+            <p class="ignition-subtitle">
+                Autodromo Nazionale Monza &bull; Live Steering Wheel LCD &bull; Continuous Pit Wall Intercom
+            </p>
+
+            <div class="session-pairing-box">
+                <span style="font-weight: 700; color: #94a3b8; font-size: 0.9rem;">SESSION CODE:</span>
+                <input type="text" id="driverRoomInput" class="ignition-code-input" maxlength="6" value="849201" placeholder="849201">
+            </div>
+
+            <button class="btn-ignition-start" id="btnIgnitionStart" onclick="startF1IgnitionAndCockpit()">
+                <span class="ign-icon">⚡</span>
+                <span>ENTER COCKPIT</span>
+            </button>
+            <div class="ignition-hint">
+                Synchronizes FastF1 telemetry and activates continuous hands-free pit radio intercom
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. AUTHENTIC F1 DIGITAL STEERING WHEEL HOUSING -->
+    <div class="steering-wheel-frame">
+
+        <!-- TOP: 15-LED RPM SHIFT LIGHT BAR -->
+        <div class="shift-lights-cluster" id="shiftLightsCluster">
+            <!-- 5 Green LEDs (Low Revs) -->
+            <div class="led led-green" id="led0"></div>
+            <div class="led led-green" id="led1"></div>
+            <div class="led led-green" id="led2"></div>
+            <div class="led led-green" id="led3"></div>
+            <div class="led led-green" id="led4"></div>
+            <!-- 5 Red LEDs (Mid/High Revs) -->
+            <div class="led led-red" id="led5"></div>
+            <div class="led led-red" id="led6"></div>
+            <div class="led led-red" id="led7"></div>
+            <div class="led led-red" id="led8"></div>
+            <div class="led led-red" id="led9"></div>
+            <!-- 5 Blue/Purple LEDs (Shift Point 12,500 RPM) -->
+            <div class="led led-blue" id="led10"></div>
+            <div class="led led-blue" id="led11"></div>
+            <div class="led led-blue" id="led12"></div>
+            <div class="led led-blue" id="led13"></div>
+            <div class="led led-blue" id="led14"></div>
+        </div>
+
+        <!-- MAIN DIGITAL STEERING WHEEL LCD DISPLAY -->
+        <main class="wheel-lcd-screen">
+
+            <!-- LCD HEADER: LAP & SESSION INFO -->
+            <div class="lcd-header-bar">
+                <div class="lcd-team-tag">
+                    <span class="car-badge">CAR 16</span>
+                    <span class="driver-name">ALEX VANCE // APEX RACING</span>
+                </div>
+                <div class="lcd-lap-wrap">
+                    <span class="lap-label">LAP</span>
+                    <span class="lap-num" id="f1LapNum">01</span>
+                    <span class="lap-max">/ 51</span>
+                </div>
+                <div class="lcd-room-tag" id="f1RoomTag">
+                    ROOM: <span id="f1RoomCodeText">#849201</span>
+                </div>
+            </div>
+
+            <!-- CORE 3-PANEL STEERING WHEEL GRID -->
+            <div class="f1-core-triad">
+
+                <!-- OPTION 1 (LEFT): DELTA GAP & ERS / DRS STATUS -->
+                <div class="lcd-panel panel-left" aria-label="Delta and Mode">
+                    <span class="panel-header-label">DELTA TO #1 STERLING</span>
+                    <div class="delta-display" id="f1DeltaDisplay">
+                        <span id="f1DeltaVal">+0.420</span><span class="unit-s">s</span>
+                    </div>
+                    <div class="delta-sub" id="f1ClosingRate">
+                        CLOSING: <span id="f1ClosingVal">+8.4</span> KM/H
+                    </div>
+
+                    <div class="ers-mode-box" id="f1ModeBadge">
+                        BALANCE
+                    </div>
+
+                    <div class="drs-status-badge drs-closed" id="f1DrsBadge">
+                        DRS CLOSED
+                    </div>
+                </div>
+
+                <!-- OPTION 2 (CENTER - HERO): GEAR & SPEED (KM/H) -->
+                <div class="lcd-panel panel-center" aria-label="Gear and Speed">
+                    <div class="gear-hero-wrap">
+                        <span class="gear-title">GEAR</span>
+                        <div class="gear-num" id="f1GearNum">7</div>
+                    </div>
+
+                    <div class="speed-hero-wrap">
+                        <div class="speed-num" id="f1SpeedNum">284</div>
+                        <span class="speed-unit-tag">KM/H</span>
+                    </div>
+
+                    <div class="rpm-meter-wrap">
+                        <span class="rpm-text" id="f1RpmText">11,480 RPM</span>
+                    </div>
+                </div>
+
+                <!-- OPTION 3 (RIGHT): BATTERY SOC % & ERS DEPLOY (kW) -->
+                <div class="lcd-panel panel-right" aria-label="Battery State of Charge">
+                    <div class="soc-header-row">
+                        <span class="panel-header-label">BATTERY SOC</span>
+                        <span class="soc-sub-pill" title="Physics-derived from real telemetry inputs">PHYSICS ERS</span>
+                    </div>
+                    <div class="soc-display soc-optimal" id="f1SocDisplay">
+                        <span id="f1SocVal">76.5</span><span class="unit-pct">%</span>
+                    </div>
+
+                    <!-- Dynamic Horizontal Energy Fill Bar -->
+                    <div class="ers-bar-track">
+                        <div class="ers-bar-fill" id="f1SocBar" style="width: 76%;"></div>
+                    </div>
+
+                    <div class="ers-deploy-tag tag-deploy" id="f1DeployTag">
+                        +120 kW MGU-K DEPLOY
+                    </div>
+
+                    <div class="risk-reward-pill" id="f1RrPill">
+                        RISK/REWARD: <span id="f1RrVal">1.8 : 1</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- OPTION 4 (BOTTOM BANNER): PIT WALL DIRECTIVE BANNER -->
+            <div class="lcd-directive-strip" id="f1DirectiveStrip">
+                <div class="directive-flash-icon">⚡</div>
+                <div class="directive-content">
+                    <span class="directive-tag">STRATEGY DIRECTIVE:</span>
+                    <span class="directive-main-text" id="f1DirectiveText">HOLD BALANCED PACE</span>
+                </div>
+                <div class="directive-sub-reason" id="f1DirectiveReason">
+                    Battery above 15% reserve. Awaiting DRS overtake detection window down main straight.
+                </div>
+            </div>
+
+        </main>
+
+        <!-- FOOTER: HANDS-FREE FULL-DUPLEX LIVE INTERCOM BAR -->
+        <footer class="wheel-bottom-bar">
+            <div class="intercom-left">
+                <span class="radio-live-pulse" id="f1RadioDot"></span>
+                <span class="radio-label-text" id="f1RadioLabel">CONTINUOUS OPEN MIC // LIVE PIT WALL VOICE</span>
+            </div>
+
+            <!-- Voice Activity RMS Meter -->
+            <div class="driver-voice-meter" title="Microphone voice activity">
+                <div class="voice-fill-bar" id="driverVoiceBar" style="width: 0%;"></div>
+            </div>
+
+            <div class="intercom-right">
+                <button class="btn-driver-mute" id="btnDriverMute" onclick="toggleDriverMute()">
+                    MUTE MIC
+                </button>
+                <div class="coach-link-status" id="f1CoachStatus">
+                    COACH ONLINE
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="/static/js/radio_audio.js"></script>
+    <script src="/static/js/driver.js"></script>
+</body>
+</html>

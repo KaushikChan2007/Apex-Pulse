@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apex Pulse - Energy & Overtake Intelligence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #080b12;
+            --card-bg: #0f1523;
+            --border-color: #1e293b;
+            --accent-red: #e10600;
+            --accent-cyan: #00e5ff;
+            --accent-green: #00ff88;
+            --accent-yellow: #ffcc00;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Rajdhani', sans-serif;
+        }
+        body {
+            background: var(--bg-color);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .header-title {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .badge {
+            background: var(--accent-red);
+            font-weight: 900;
+            padding: 5px 14px;
+            border-radius: 4px;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        h1 {
+            font-size: 3.2rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #ffffff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subhead {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            letter-spacing: 1px;
+            margin-top: 6px;
+        }
+        .pairing-banner {
+            background: #111a2e;
+            border: 1px solid var(--accent-cyan);
+            box-shadow: 0 0 25px rgba(0, 229, 255, 0.15);
+            border-radius: 10px;
+            padding: 10px 24px;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+        .code-tag {
+            background: var(--accent-cyan);
+            color: #050505;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-weight: 900;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+        }
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            max-width: 980px;
+            width: 100%;
+        }
+        .role-card {
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 14px;
+            padding: 2.2rem 2rem;
+            text-decoration: none;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.25s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            position: relative;
+        }
+        .role-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--accent-cyan);
+            box-shadow: 0 15px 40px rgba(0, 229, 255, 0.2);
+        }
+        .role-icon {
+            font-size: 2.8rem;
+            margin-bottom: 0.8rem;
+        }
+        .role-title {
+            font-size: 1.9rem;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 0.6rem;
+        }
+        .role-desc {
+            font-size: 1rem;
+            color: #cbd5e1;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+        .features-list {
+            list-style: none;
+            margin-bottom: 1.8rem;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-size: 0.95rem;
+            color: #94a3b8;
+        }
+        .features-list li::before {
+            content: "⚡ ";
+            color: var(--accent-cyan);
+        }
+        .btn-launch {
+            background: #1e293b;
+            color: #fff;
+            text-align: center;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 1.15rem;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            transition: all 0.2s ease;
+        }
+        .role-card:hover .btn-launch {
+            background: var(--accent-cyan);
+            color: #050505;
+        }
+        .split-link {
+            margin-top: 2rem;
+            font-size: 0.95rem;
+            color: #64748b;
+            text-align: center;
+        }
+        .split-link a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header-title">
+        <span class="badge">AI MOTORSPORT INTELLIGENCE</span>
+        <h1>Apex Pulse Command Hub</h1>
+        <p class="subhead">Real-Time Energy Deployment & Overtake Risk-Reward Decision Suite</p>
+    </header>
+
+    <!-- 6-DIGIT MULTI-DEVICE PAIRING INFO -->
+    <div class="pairing-banner">
+        <span>SESSION PAIRING CODE:</span>
+        <span class="code-tag">849201</span>
+        <span style="color: #94a3b8;">Use this single 6-digit code to link Coach & Driver dashboards across different laptops over LAN!</span>
+    </div>
+
+    <main class="dashboard-grid">
+
+        <!-- DRIVER DASHBOARD CARD -->
+        <a href="/driver?code=849201" class="role-card">
+            <div>
+                <div class="role-icon">🏎️</div>
+                <h2 class="role-title" style="color: var(--accent-green);">Driver Cockpit HUD</h2>
+                <p class="role-desc">
+                    3-column high-contrast cockpit interface designed for in-cockpit viewing at 300+ kph. Real-time telemetry, hands-free open voice intercom, and zero cognitive clutter.
+                </p>
+                <ul class="features-list">
+                    <li>Center: Digital Speed (km/h) + Current Lap + Battery SoC %</li>
+                    <li>Left: Overtake Mode & Cost, DRS Flap Status, Delta Gap</li>
+                    <li>Right: Risk-to-Reward Ratio, Overtake Prob %, Pit Wall Directive</li>
+                    <li>Hands-free continuous full-duplex live audio intercom</li>
+                    <li>6-Digit session code instant pairing</li>
+                </ul>
+            </div>
+            <div class="btn-launch">LAUNCH DRIVER HUD →</div>
+        </a>
+
+        <!-- COACH DASHBOARD CARD -->
+        <a href="/coach?code=849201" class="role-card">
+            <div>
+                <div class="role-icon">📊</div>
+                <h2 class="role-title" style="color: var(--accent-cyan);">Coach & Pit Wall Center</h2>
+                <p class="role-desc">
+                    Tactical headquarters with synchronized 50-lap telemetry replay, interactive F1 circuit map, multi-policy battery forecast, and Gemini AI strategist.
+                </p>
+                <ul class="features-list">
+                    <li>Interactive F1 Circuit Simulation tracking real-time position</li>
+                    <li>XGBoost Overtake Classifier: validated on all available holdout overtake events (13, laps 41–50)</li>
+                    <li>FIA Regulatory Sentinel & Multi-Policy Battery SoC Forecast</li>
+                    <li>Real-time Gemini AI Dual-Feed ("Going Right" vs "Going Wrong")</li>
+                    <li>Interactive Gemini Q&A Chatbot ("Where losing time?")</li>
+                    <li>50-Lap Whole Race Strategic Analytics Summary</li>
+                </ul>
+            </div>
+            <div class="btn-launch">LAUNCH COACH CENTER →</div>
+        </a>
+
+    </main>
+
+    <footer class="split-link">
+        Cross-Laptop Setup: Open Coach on Laptop A (<a href="/coach?code=849201">/coach?code=849201</a>) and Driver on Laptop B (<a href="/driver?code=849201">/driver?code=849201</a>). Both sync live with continuous voice!
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+# Environment & Secret Credentials (CRITICAL: NEVER COMMIT KEYS)
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+
+# FastF1 Binary Cache & Telemetry Downloads
+cache/
+
+# Python Cache & Bytecode
+__pycache__/
+*.py[cod]
+*.class
+*.so
+.pytest_cache/
+
+# Temporary Archives, Large Media & Scratch Files
+archive.zip
+*.log
+*.mp4
+*.xls
+ChatGPT Image*
+Wall Art*
+scratch/
+.system_generated/
+
+# OS & Editor Files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

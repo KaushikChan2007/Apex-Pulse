@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apex Pulse - Dual Console Split-Screen Demo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700;800;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-base: #06090e;
+            --bg-bar: #0a0f18;
+            --border: #1a2538;
+            --neon-green: #00e599;
+            --neon-cyan: #00c8e6;
+            --neon-amber: #f59e0b;
+            --haas-red: #e10600;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: var(--bg-base);
+            color: #f8fafc;
+            font-family: 'Inter', sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .demo-top-bar {
+            height: 48px;
+            background: var(--bg-bar);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            gap: 16px;
+            z-index: 100;
+            flex-shrink: 0;
+        }
+        .demo-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .brand-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 900;
+            font-size: 1.15rem;
+            letter-spacing: 1px;
+            color: #ffffff;
+        }
+        .demo-tag {
+            background: rgba(0, 229, 153, 0.15);
+            border: 1px solid var(--neon-green);
+            color: var(--neon-green);
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 800;
+            font-size: 0.72rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            letter-spacing: 1px;
+        }
+        .demo-center-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .code-label {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 800;
+            font-size: 0.85rem;
+            color: #94a3b8;
+        }
+        .code-input {
+            background: #101624;
+            border: 1px solid var(--border);
+            color: var(--neon-green);
+            font-family: 'Rajdhani', monospace;
+            font-size: 1rem;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 4px;
+            width: 84px;
+            text-align: center;
+            outline: none;
+            letter-spacing: 1.5px;
+        }
+        .btn-sync {
+            background: var(--neon-green);
+            color: #050505;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 12px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 800;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .btn-sync:hover { opacity: 0.9; }
+        .demo-hint {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .demo-hint span { color: var(--neon-amber); font-weight: 700; }
+        .demo-split-container {
+            flex: 1;
+            display: flex;
+            height: calc(100vh - 48px);
+            width: 100vw;
+            position: relative;
+        }
+        .demo-pane {
+            flex: 1;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            border-right: 2px solid var(--border);
+        }
+        .demo-pane:last-child {
+            border-right: none;
+        }
+        .pane-header-strip {
+            height: 28px;
+            background: #0d131f;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 12px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 800;
+            font-size: 0.78rem;
+            letter-spacing: 1px;
+            flex-shrink: 0;
+        }
+        .pane-title {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .pane-title.coach { color: var(--neon-cyan); }
+        .pane-title.driver { color: var(--haas-red); }
+        .btn-pane-link {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.72rem;
+            transition: color 0.2s;
+        }
+        .btn-pane-link:hover { color: #ffffff; }
+        .demo-iframe {
+            flex: 1;
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: #000;
+        }
+        @media (max-width: 900px) {
+            .demo-split-container { flex-direction: column; }
+            .demo-pane { border-right: none; border-bottom: 2px solid var(--border); height: 50%; }
+        }
+    </style>
+</head>
+<body>
+    <header class="demo-top-bar">
+        <div class="demo-brand">
+            <span class="brand-title">APEX PULSE // SINGLE-MACHINE FALLBACK</span>
+            <span class="demo-tag">DUAL CONSOLE SPLIT-SCREEN</span>
+        </div>
+
+        <div class="demo-center-controls">
+            <span class="code-label">SESSION:</span>
+            <input type="text" id="splitCodeInput" class="code-input" maxlength="6" value="849201">
+            <button class="btn-sync" onclick="syncSplitPanes()">SYNC PANES ⚡</button>
+        </div>
+
+        <div class="demo-hint">
+            <span>HEADPHONES TIP:</span> Wear headset to avoid audio loopback on single PC intercom
+        </div>
+    </header>
+
+    <main class="demo-split-container">
+        <!-- Left: Pit Wall Coach Console -->
+        <section class="demo-pane">
+            <div class="pane-header-strip">
+                <span class="pane-title coach">PIT WALL COACH CONSOLE (PRIMARY & SECONDARY LAYERS)</span>
+                <a class="btn-pane-link" id="linkCoach" href="/coach?code=849201" target="_blank">Open Fullscreen ↗</a>
+            </div>
+            <iframe class="demo-iframe" id="iframeCoach" src="/coach?code=849201" allow="microphone"></iframe>
+        </section>
+
+        <!-- Right: Driver Steering Wheel Cockpit HUD -->
+        <section class="demo-pane">
+            <div class="pane-header-strip">
+                <span class="pane-title driver">DRIVER STEERING WHEEL COCKPIT HUD (CAR 16 ALEX VANCE)</span>
+                <a class="btn-pane-link" id="linkDriver" href="/driver?code=849201" target="_blank">Open Fullscreen ↗</a>
+            </div>
+            <iframe class="demo-iframe" id="iframeDriver" src="/driver?code=849201" allow="microphone"></iframe>
+        </section>
+    </main>
+
+    <script>
+        function syncSplitPanes() {
+            const input = document.getElementById('splitCodeInput');
+            const code = (input.value || '849201').trim().toUpperCase();
+            if (code.length !== 6) {
+                alert('Please enter a 6-digit session code (e.g. 849201).');
+                return;
+            }
+            const iframeCoach = document.getElementById('iframeCoach');
+            const iframeDriver = document.getElementById('iframeDriver');
+            const linkCoach = document.getElementById('linkCoach');
+            const linkDriver = document.getElementById('linkDriver');
+
+            iframeCoach.src = `/coach?code=${code}`;
+            iframeDriver.src = `/driver?code=${code}`;
+            linkCoach.href = `/coach?code=${code}`;
+            linkDriver.href = `/driver?code=${code}`;
+
+            const newUrl = `${window.location.pathname}?code=${code}`;
+            window.history.replaceState({ path: newUrl }, '', newUrl);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const code = params.get('code');
+            if (code && code.trim().length === 6) {
+                document.getElementById('splitCodeInput').value = code.trim().toUpperCase();
+                syncSplitPanes();
+            }
+        });
+    </script>
+</body>
+</html>
