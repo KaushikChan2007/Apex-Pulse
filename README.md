@@ -4,6 +4,13 @@
 > A hybrid architecture — an XGBoost classifier for probabilistic judgment, wrapped in a hard-rule safety layer that no model output can override — recommends actions like **Push**, **Balance**, **Harvest**, or **Overtake** while enforcing non-negotiable constraints (reserve floors, power ceilings, eligibility windows).  
 > Built and validated on real 2023 Formula 1 telemetry (FastF1 API, Monza GP), with a proof-of-concept module showing the same unmodified engine generalizes to EV delivery-rider battery/route decisions. Includes a dual-console pit-wall/cockpit system with live WebSocket telemetry sync and a real-time AI strategist.
 
+<p align="center">
+  <img src="docs/images/pitwall_dashboard.png" alt="Apex Pulse Pit Wall Race Engineering Command Center" width="100%" />
+</p>
+<p align="center">
+  <em>Figure 1: Apex Pulse Pit Wall Race Engineering Command Center with live Monza telemetry, ERS energy monitor, and connected Gemini AI Telemetry Analyst.</em>
+</p>
+
 ---
 
 ## 🏁 Key Features & Highlights
@@ -27,6 +34,26 @@
   - **Multi-Device 6-Digit Room Pairing**: Seamless synchronization across different laptops/screens using a shared room code.
   - **Continuous Hands-Free Full-Duplex Audio Intercom**: Open-mic voice communication with live RMS meter, F1 radio squelch chimes, and automatic 15s keepalive heartbeats.
   - **Single-Machine Fallback (`/demo` or `/splitscreen`)**: Side-by-side view for local evaluation.
+
+---
+
+## 🖥️ System Interface Overview
+
+### Dual Console Architecture: Tactical Headquarters & Cockpit HUD
+
+| ⏱️ Coach Pit Wall Console (`/coach`) | 🏎️ Driver Cockpit HUD (`/driver`) |
+| :---: | :---: |
+| <img src="docs/images/decision_engine_policy.png" alt="Decision Engine & Policy Simulation" width="100%" /> | <img src="docs/images/driver_hud.png" alt="Driver Cockpit HUD" width="100%" /> |
+| **XGBoost Inference & 25-Lap Horizon Policy Simulation** | **Steering Wheel LCD & Real-Time Strategy Directives** |
+
+### Automated Regulatory Sentinel & Safety Floor Audit
+
+<p align="center">
+  <img src="docs/images/fia_sentinel_audit.png" alt="FIA Rule & Battery Reserve Sentinel" width="100%" />
+</p>
+<p align="center">
+  <em>Figure 2: Real-time FIA Rule & Battery Reserve Sentinel enforcing DRS eligibility gates, the &le;15% critical battery reserve floor, and MGU-K regulatory power ceilings.</em>
+</p>
 
 ---
 
@@ -147,4 +174,3 @@ If hosting static frontend files separately:
 | **RPM Shift Light Bands** | $8,800\text{--}12,650\text{ RPM}$ (Grounded in FastF1 Monza Car 16 data) |
 | **Generalization Domain** | Last-Mile EV Delivery Fleet (unmodified `engine.py`) |
 | **Unit Test Coverage** | 11 / 11 automated tests passing (`test_engine.py`) |
->>>>>>> 72f005f (feat: complete Apex Pulse platform with FastF1 Monza telemetry and EV proof-of-generalization)
